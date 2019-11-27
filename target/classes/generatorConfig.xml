@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 
+	Mybatis生成Mapper配置文件
+	1，cmd切换至项目根目录
+	2，执行：mvn mybatis-generator:generate -Dmybatis.generator.configurationFile=src/main/java/resources/generatorConfig.xml -Dmybatis.generator.overwrite=true
+ -->
+<generatorConfiguration>
+  <classPathEntry
+    location="D:\Applications\apache-maven-3.5.0\conf\repository\mysql\mysql-connector-java\5.1.35\mysql-connector-java-5.1.35.jar"/>
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <!-- Example Criteria 增强插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
+    <!-- MySQL分页插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin"/>
+    <!-- 数据Model属性对应Column获取插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+    <!-- 批量插入插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+    </plugin>
+    <!-- 查询结果选择性返回插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin" />
+    <!-- 乐观锁插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.OptimisticLockerPlugin">
+      <!-- 是否启用自定义nextVersion，默认不启用(插件会默认使用sql的 set column = column + 1) -->
+      <property name="customizedNextVersion" value="false"/>
+    </plugin>
+
+    <commentGenerator>
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+      connectionURL="jdbc:mysql://localhost:3306/gallant"
+      userId="gallant"
+      password="gallant">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="org.gallant.account.platform.entity"
+      targetProject="src/main/java">
+      <property name="enableSubPackages" value="true"/>
+      <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="mapper-gallant" targetProject="src/main/resources">
+      <property name="enableSubPackages" value="true"/>
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER"
+      targetPackage="org.gallant.account.platform.mapper" targetProject="src/main/java">
+      <property name="enableSubPackages" value="true"/>
+    </javaClientGenerator>
+
+    <table tableName="fund_order" domainObjectName="FundOrder" delimitIdentifiers="true">
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+    <table tableName="fund_order_type" domainObjectName="FundOrderType" delimitIdentifiers="true">
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+    <table tableName="account_info" domainObjectName="AccountInfo" delimitIdentifiers="true">
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+    <table tableName="product_info" domainObjectName="ProductInfo" delimitIdentifiers="true">
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+  </context>
+</generatorConfiguration>
