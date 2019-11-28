@@ -14,18 +14,18 @@ import lombok.Data;
 public class AccountInfoSaveDTO implements Serializable {
 
     private static final long serialVersionUID = 8000618299725133657L;
-    @NotBlank(message = "账户类型名称不能为空")
+    @NotBlank(groups = SaveGroup.class, message = "账户类型名称不能为空")
     private String accountTypeName;
 
-    @NotBlank(message = "账户银行名称不能为空")
+    @NotBlank(groups = SaveGroup.class, message = "账户银行名称不能为空")
     private String accountBankName;
 
-    @NotBlank(message = "账户银行卡号不能为空")
+    @NotBlank(groups = SaveGroup.class, message = "账户银行卡号不能为空")
     private String accountCardCode;
 
-    @NotNull(message = "还款日期不能为空")
+    @NotNull(groups = SaveGroup.class, message = "还款日期不能为空")
     private Date repaymentDate;
 
-    @NotBlank(message = "账户归属不能为空")
+    @NotBlank(groups = SaveGroup.class, message = "账户归属不能为空")
     private String owner;
 }

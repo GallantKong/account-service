@@ -13,6 +13,6 @@ import lombok.EqualsAndHashCode;
 public class AccountInfoUpdateDTO extends AccountInfoSaveDTO {
 
     private static final long serialVersionUID = 5332623238945579244L;
-    @NotNull(groups = {AccountInfoUpdateDTO.class}, message = "主键不能为空")
+    @NotNull(groups = UpdateGroup.class, message = "主键不能为空")
     private Integer id;
 }

@@ -56,6 +56,23 @@ public class AccountInfoControllerTest extends UnitTestBase {
     }
 
     @Test
+    public void query() throws Exception {
+        // 构建请求
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("utf8")
+                .accept(MediaType.APPLICATION_JSON)
+                .param("id", "1");
+        // 发送请求，获取请求结果
+        ResultActions perform = mockMvc.perform(request);
+        // 请求结果校验
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        System.out.println("response:"+response);
+    }
+
+    @Test
     public void save() throws Exception {
         AccountInfoSaveDTO accountInfoSaveDTO = new AccountInfoSaveDTO();
         accountInfoSaveDTO.setAccountBankName("我的银行");
@@ -81,17 +98,31 @@ public class AccountInfoControllerTest extends UnitTestBase {
     @Test
     public void update() throws Exception {
         AccountInfoUpdateDTO accountInfoUpdateDTO = new AccountInfoUpdateDTO();
-        accountInfoUpdateDTO.setAccountBankName("我的银行");
-        accountInfoUpdateDTO.setAccountCardCode("就不告诉你");
+        accountInfoUpdateDTO.setId(2);
         accountInfoUpdateDTO.setAccountTypeName("我就是类型22222");
-        accountInfoUpdateDTO.setOwner("会灰翔的灰机");
-        accountInfoUpdateDTO.setRepaymentDate(new Date());
         // 构建请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/account")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(JSONObject.toJSONString(accountInfoUpdateDTO));
+        // 发送请求，获取请求结果
+        ResultActions perform = mockMvc.perform(request);
+        // 请求结果校验
+        perform.andExpect(MockMvcResultMatchers.status().isOk());
+        MvcResult mvcResult = perform.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        System.out.println("response:"+response);
+    }
+
+    @Test
+    public void delete() throws Exception {
+        // 构建请求
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete("/account")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("utf8")
+                .accept(MediaType.APPLICATION_JSON)
+                .param("id", "1");
         // 发送请求，获取请求结果
         ResultActions perform = mockMvc.perform(request);
         // 请求结果校验

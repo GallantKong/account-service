@@ -2,15 +2,17 @@ package org.gallant.account.controller;
 
 import java.util.List;
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.gallant.account.domain.dto.AccountInfoDTO;
 import org.gallant.account.domain.dto.AccountInfoQueryDTO;
 import org.gallant.account.domain.dto.AccountInfoSaveDTO;
 import org.gallant.account.domain.dto.AccountInfoUpdateDTO;
+import org.gallant.account.domain.dto.SaveGroup;
+import org.gallant.account.domain.dto.UpdateGroup;
 import org.gallant.account.exception.AccountServiceException;
 import org.gallant.account.manager.AccountInfoManager;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,13 +51,13 @@ public class AccountInfoController extends BaseController {
     }
 
     @PostMapping
-    public AccountInfoDTO save(@Valid @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
+    public AccountInfoDTO save(@Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
         processBindingResult(errors);
         return accountInfoManager.save(accountInfoSaveDTO);
     }
 
     @PutMapping
-    public AccountInfoDTO update(@Valid @RequestBody AccountInfoUpdateDTO accountInfoUpdateDTO, BindingResult errors) {
+    public AccountInfoDTO update(@Validated(UpdateGroup.class) @RequestBody AccountInfoUpdateDTO accountInfoUpdateDTO, BindingResult errors) {
         processBindingResult(errors);
         return accountInfoManager.update(accountInfoUpdateDTO);
     }
