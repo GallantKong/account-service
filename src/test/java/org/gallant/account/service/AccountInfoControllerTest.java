@@ -58,11 +58,10 @@ public class AccountInfoControllerTest extends UnitTestBase {
     @Test
     public void query() throws Exception {
         // 构建请求
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/account")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/account/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
-                .accept(MediaType.APPLICATION_JSON)
-                .param("id", "1");
+                .accept(MediaType.APPLICATION_JSON);
         // 发送请求，获取请求结果
         ResultActions perform = mockMvc.perform(request);
         // 请求结果校验
@@ -118,7 +117,7 @@ public class AccountInfoControllerTest extends UnitTestBase {
     @Test
     public void delete() throws Exception {
         // 构建请求
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete("/account/1")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete("/account/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON);

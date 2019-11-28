@@ -44,7 +44,11 @@ public class AccountInfoManager {
     }
 
     public AccountInfoDTO queryByPrimaryKey(Integer id) {
-        return convert2DTO(accountInfoMapper.selectByPrimaryKey(id));
+        AccountInfo accountInfo = accountInfoMapper.selectByPrimaryKey(id);
+        if (accountInfo != null) {
+            return convert2DTO(accountInfo);
+        }
+        return null;
     }
 
     public AccountInfoDTO save(AccountInfoSaveDTO accountInfoSaveDTO) {
@@ -74,7 +78,10 @@ public class AccountInfoManager {
     }
 
     public int delete(Integer id) {
-        return accountInfoMapper.deleteByPrimaryKey(id);
+        AccountInfo accountInfo = new AccountInfo();
+        accountInfo.setId(id);
+        accountInfo.setIsActive(false);
+        return accountInfoMapper.updateByPrimaryKeySelective(accountInfo);
     }
 
     private AccountInfoDTO convert2DTO(AccountInfo accountInfo) {
