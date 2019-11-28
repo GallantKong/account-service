@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" strict="true">
   <Properties>
-    <Property name="logging.file.name">./logs/${project.groupId}.${project.artifactId}.log</Property>
-    <Property name="logging.file.filePattern">${project.groupId}.${project.artifactId}.%d{yyyy-MM-dd}</Property>
+    <Property name="logging.file.name">./logs/account-service.log</Property>
+    <Property name="logging.file.filePattern">account-service.%d{yyyy-MM-dd}</Property>
     <Property name="layout">%d %p [%t] %c{1.}:%M:%L %X{orderId,groupId} %m%n</Property>
   </Properties>
 
@@ -17,7 +17,7 @@
   </Appenders>
 
   <Loggers>
-    <Logger name="org.gallant.account.service" level="debug">
+    <Logger name="org.gallant.account" level="debug">
       <appender-ref ref="appAppender"/>
     </Logger>
   </Loggers>

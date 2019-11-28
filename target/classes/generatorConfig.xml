@@ -46,7 +46,7 @@
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="org.gallant.account.platform.entity"
+    <javaModelGenerator targetPackage="org.gallant.account.entity"
       targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
@@ -57,7 +57,7 @@
     </sqlMapGenerator>
 
     <javaClientGenerator type="XMLMAPPER"
-      targetPackage="org.gallant.account.platform.mapper" targetProject="src/main/java">
+      targetPackage="org.gallant.account.mapper" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
 

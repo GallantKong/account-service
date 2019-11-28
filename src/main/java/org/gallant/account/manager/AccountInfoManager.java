@@ -1,6 +1,7 @@
 package org.gallant.account.manager;
 
 import com.google.common.collect.Lists;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,6 +50,10 @@ public class AccountInfoManager {
     public AccountInfoDTO save(AccountInfoSaveDTO accountInfoSaveDTO) {
         AccountInfoDTO accountInfoDTO = null;
         AccountInfo accountInfo = convert(accountInfoSaveDTO);
+        accountInfo.setIsActive(true);
+        Date date = new Date();
+        accountInfo.setCreateTime(date);
+        accountInfo.setModifyTime(date);
         int count = accountInfoMapper.insertSelective(accountInfo);
         if (count == 1) {
             accountInfoDTO = convert2DTO(accountInfo);
@@ -59,6 +64,8 @@ public class AccountInfoManager {
     public AccountInfoDTO update(AccountInfoUpdateDTO accountInfoUpdateDTO) {
         AccountInfoDTO accountInfoDTO = null;
         AccountInfo accountInfo = convert(accountInfoUpdateDTO);
+        Date date = new Date();
+        accountInfo.setModifyTime(date);
         int count = accountInfoMapper.updateByPrimaryKeySelective(accountInfo);
         if (count == 1) {
             accountInfoDTO = convert2DTO(accountInfo);

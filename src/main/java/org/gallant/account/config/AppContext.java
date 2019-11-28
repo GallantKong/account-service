@@ -38,5 +38,4 @@ public class AppContext {
         jetty.setPort(Integer.parseInt(serverPort.trim()));
         return jetty;
     }
-
 }

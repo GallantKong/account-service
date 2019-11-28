@@ -35,11 +35,13 @@ public class AccountInfoController extends BaseController {
 
     @GetMapping
     public List<AccountInfoDTO> query(@ModelAttribute AccountInfoQueryDTO accountInfoQueryDTO) {
+        log.debug("accountInfoQueryDTO:{}", accountInfoQueryDTO);
         return accountInfoManager.queryByPage(accountInfoQueryDTO);
     }
 
     @GetMapping(value="/{id:\\d+}")
     public AccountInfoDTO query(@PathVariable Integer id) {
+        log.debug("id:{}", id);
         if (id == null) {
             throw new AccountServiceException("主键不能为空");
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.gallant.account.platform.mapper.AccountInfoMapper">
-  <resultMap id="BaseResultMap" type="org.gallant.account.platform.entity.AccountInfo">
+<mapper namespace="org.gallant.account.mapper.AccountInfoMapper">
+  <resultMap id="BaseResultMap" type="org.gallant.account.entity.AccountInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account_type_name" jdbcType="VARCHAR" property="accountTypeName" />
     <result column="account_bank_name" jdbcType="VARCHAR" property="accountBankName" />
@@ -74,7 +74,7 @@
     id, account_type_name, account_bank_name, account_card_code, repayment_date, owner, 
     is_active, create_time, modify_time
   </sql>
-  <select id="selectByExample" parameterType="org.gallant.account.platform.entity.AccountInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.gallant.account.entity.AccountInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -156,13 +156,13 @@
     delete from `account_info`
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.gallant.account.platform.entity.AccountInfoExample">
+  <delete id="deleteByExample" parameterType="org.gallant.account.entity.AccountInfoExample">
     delete from `account_info`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.gallant.account.platform.entity.AccountInfo">
+  <insert id="insert" parameterType="org.gallant.account.entity.AccountInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -175,7 +175,7 @@
       #{isActive,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.gallant.account.platform.entity.AccountInfo">
+  <insert id="insertSelective" parameterType="org.gallant.account.entity.AccountInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -233,7 +233,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.gallant.account.platform.entity.AccountInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.gallant.account.entity.AccountInfoExample" resultType="java.lang.Long">
     select count(*) from `account_info`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -289,7 +289,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.gallant.account.platform.entity.AccountInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="org.gallant.account.entity.AccountInfo">
     update `account_info`
     <set>
       <if test="accountTypeName != null">
@@ -319,7 +319,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.gallant.account.platform.entity.AccountInfo">
+  <update id="updateByPrimaryKey" parameterType="org.gallant.account.entity.AccountInfo">
     update `account_info`
     set account_type_name = #{accountTypeName,jdbcType=VARCHAR},
       account_bank_name = #{accountBankName,jdbcType=VARCHAR},

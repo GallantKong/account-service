@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" strict="true">
+  <Properties>
+    <Property name="logging.file.name">./logs/account-service.log</Property>
+    <Property name="logging.file.filePattern">account-service.%d{yyyy-MM-dd}</Property>
+    <Property name="layout">%d %p [%t] %c{1.}:%M:%L %X{orderId,groupId} %m%n</Property>
+  </Properties>
 
+  <Appenders>
+    <RollingRandomAccessFile name="appAppender"
+      immediateFlush="true" fileName="${logging.file.name}"
+      filePattern="${logging.file.filePattern}}">
+      <PatternLayout pattern="${layout}" />
+      <ThresholdFilter level="INFO" />
+      <TimeBasedTriggeringPolicy />
+    </RollingRandomAccessFile>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="org.gallant.account" level="debug">
+      <appender-ref ref="appAppender"/>
+    </Logger>
+  </Loggers>
 </Configuration>
