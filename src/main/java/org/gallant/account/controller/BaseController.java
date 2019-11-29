@@ -11,7 +11,7 @@ public abstract class BaseController {
 
     private static final String COMMA = ",";
 
-    protected void processBindingResult(BindingResult errors) {
+    void processBindingResult(BindingResult errors) {
         if(errors.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             errors.getAllErrors().forEach(error -> sb.append(error.getDefaultMessage()).append(COMMA));

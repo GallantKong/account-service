@@ -38,7 +38,7 @@ public class AccountInfoControllerTest extends UnitTestBase {
     @Test
     public void queryByPage() throws Exception {
         // 构建请求
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/account")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/account/list")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON)
@@ -96,15 +96,14 @@ public class AccountInfoControllerTest extends UnitTestBase {
 
     @Test
     public void update() throws Exception {
-        AccountInfoUpdateDTO accountInfoUpdateDTO = new AccountInfoUpdateDTO();
-        accountInfoUpdateDTO.setId(2);
-        accountInfoUpdateDTO.setAccountTypeName("我就是类型22222");
+        AccountInfoSaveDTO accountInfoSaveDTO = new AccountInfoSaveDTO();
+        accountInfoSaveDTO.setAccountTypeName("我就是类型22222"+System.currentTimeMillis());
         // 构建请求
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/account")
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/account/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(JSONObject.toJSONString(accountInfoUpdateDTO));
+                .content(JSONObject.toJSONString(accountInfoSaveDTO));
         // 发送请求，获取请求结果
         ResultActions perform = mockMvc.perform(request);
         // 请求结果校验

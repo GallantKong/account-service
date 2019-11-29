@@ -1,16 +1,20 @@
 package org.gallant.account.controller;
 
-import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.gallant.account.controller.hateoas.AccountInfoResourceAssembler;
 import org.gallant.account.domain.dto.AccountInfoDTO;
 import org.gallant.account.domain.dto.AccountInfoQueryDTO;
 import org.gallant.account.domain.dto.AccountInfoSaveDTO;
 import org.gallant.account.domain.dto.AccountInfoUpdateDTO;
 import org.gallant.account.domain.dto.SaveGroup;
-import org.gallant.account.domain.dto.UpdateGroup;
 import org.gallant.account.exception.AccountServiceException;
 import org.gallant.account.manager.AccountInfoManager;
+import org.springframework.beans.BeanUtils;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,37 +38,52 @@ public class AccountInfoController extends BaseController {
 
     @Resource
     private AccountInfoManager accountInfoManager;
+    @Resource
+    private AccountInfoResourceAssembler accountInfoResourceAssembler;
 
     @GetMapping
-    public List<AccountInfoDTO> query(@ModelAttribute AccountInfoQueryDTO accountInfoQueryDTO) {
+    public CollectionModel<EntityModel<AccountInfoDTO>> query(@ModelAttribute AccountInfoQueryDTO accountInfoQueryDTO) {
         log.debug("accountInfoQueryDTO:{}", accountInfoQueryDTO);
-        return accountInfoManager.queryByPage(accountInfoQueryDTO);
+        return accountInfoResourceAssembler.toCollectionModel(accountInfoManager.queryByPage(accountInfoQueryDTO));
     }
 
     @GetMapping(value="/{id:\\d+}")
-    public AccountInfoDTO query(@PathVariable Integer id) {
+    public ResponseEntity<EntityModel<AccountInfoDTO>> query(@PathVariable Integer id) {
         log.debug("id:{}", id);
-        if (id == null) {
-            throw new AccountServiceException("主键不能为空");
+        AccountInfoDTO accountInfoDTO = accountInfoManager.queryByPrimaryKey(id);
+        if (accountInfoDTO == null) {
+            throw new AccountServiceException("对象不存在,id="+id);
         }
-        return accountInfoManager.queryByPrimaryKey(id);
+        return ResponseEntity.ok(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
     @PostMapping
-    public AccountInfoDTO save(@Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
+    public ResponseEntity<EntityModel<AccountInfoDTO>> save(@Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
         processBindingResult(errors);
-        return accountInfoManager.save(accountInfoSaveDTO);
+        AccountInfoDTO accountInfoDTO = accountInfoManager.save(accountInfoSaveDTO);
+        return createResponseEntity(accountInfoDTO);
     }
 
-    @PutMapping
-    public AccountInfoDTO update(@Validated(UpdateGroup.class) @RequestBody AccountInfoUpdateDTO accountInfoUpdateDTO, BindingResult errors) {
+    @PutMapping("/{id:\\d+}")
+    public ResponseEntity<EntityModel<AccountInfoDTO>> update(@PathVariable Integer id, @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
         processBindingResult(errors);
-        return accountInfoManager.update(accountInfoUpdateDTO);
+        // 校验是否存在
+        query(id);
+        AccountInfoUpdateDTO accountInfoUpdateDTO = new AccountInfoUpdateDTO();
+        BeanUtils.copyProperties(accountInfoSaveDTO, accountInfoUpdateDTO);
+        accountInfoUpdateDTO.setId(id);
+        AccountInfoDTO accountInfoDTO = accountInfoManager.update(accountInfoUpdateDTO);
+        return createResponseEntity(accountInfoDTO);
     }
 
     @DeleteMapping("/{id:\\d+}")
     public int delete(@PathVariable Integer id) {
         return accountInfoManager.delete(id);
+    }
+
+    private ResponseEntity<EntityModel<AccountInfoDTO>> createResponseEntity(AccountInfoDTO accountInfoDTO){
+        return ResponseEntity.created(
+                WebMvcLinkBuilder.linkTo(query(accountInfoDTO.getId())).toUri()).body(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
 }
