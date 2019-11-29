@@ -4,8 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.Date;
 import javax.annotation.Resource;
 import org.gallant.account.controller.AccountInfoController;
-import org.gallant.account.domain.dto.AccountInfoSaveDTO;
-import org.gallant.account.domain.dto.AccountInfoUpdateDTO;
+import org.gallant.account.domain.dto.param.AccountInfoBaseDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -73,18 +72,18 @@ public class AccountInfoControllerTest extends UnitTestBase {
 
     @Test
     public void save() throws Exception {
-        AccountInfoSaveDTO accountInfoSaveDTO = new AccountInfoSaveDTO();
-        accountInfoSaveDTO.setAccountBankName("我的银行");
-        accountInfoSaveDTO.setAccountCardCode("就不告诉你");
-        accountInfoSaveDTO.setAccountTypeName("我就是类型");
-        accountInfoSaveDTO.setOwner("会灰翔的灰机");
-        accountInfoSaveDTO.setRepaymentDate(new Date());
+        AccountInfoBaseDTO accountInfoBaseDTO = new AccountInfoBaseDTO();
+        accountInfoBaseDTO.setAccountBankName("我的银行");
+        accountInfoBaseDTO.setAccountCardCode("就不告诉你");
+        accountInfoBaseDTO.setAccountTypeName("我就是类型");
+        accountInfoBaseDTO.setOwner("会灰翔的灰机");
+        accountInfoBaseDTO.setRepaymentDate(new Date());
         // 构建请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/account")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(JSONObject.toJSONString(accountInfoSaveDTO));
+                .content(JSONObject.toJSONString(accountInfoBaseDTO));
         // 发送请求，获取请求结果
         ResultActions perform = mockMvc.perform(request);
         // 请求结果校验
@@ -96,14 +95,14 @@ public class AccountInfoControllerTest extends UnitTestBase {
 
     @Test
     public void update() throws Exception {
-        AccountInfoSaveDTO accountInfoSaveDTO = new AccountInfoSaveDTO();
-        accountInfoSaveDTO.setAccountTypeName("我就是类型22222"+System.currentTimeMillis());
+        AccountInfoBaseDTO accountInfoBaseDTO = new AccountInfoBaseDTO();
+        accountInfoBaseDTO.setAccountTypeName("我就是类型22222"+System.currentTimeMillis());
         // 构建请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/account/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf8")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(JSONObject.toJSONString(accountInfoSaveDTO));
+                .content(JSONObject.toJSONString(accountInfoBaseDTO));
         // 发送请求，获取请求结果
         ResultActions perform = mockMvc.perform(request);
         // 请求结果校验

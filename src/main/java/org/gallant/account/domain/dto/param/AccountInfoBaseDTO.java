@@ -1,17 +1,18 @@
-package org.gallant.account.domain.dto;
+package org.gallant.account.domain.dto.param;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import org.gallant.account.domain.dto.SaveGroup;
 
 /**
  * @author kongyong
  * @date 2019/11/28
  */
 @Data
-public class AccountInfoSaveDTO implements Serializable {
+public class AccountInfoBaseDTO implements Serializable {
 
     private static final long serialVersionUID = 8000618299725133657L;
     @NotBlank(groups = SaveGroup.class, message = "账户类型名称不能为空")

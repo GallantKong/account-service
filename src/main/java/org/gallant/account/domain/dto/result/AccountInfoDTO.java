@@ -1,4 +1,4 @@
-package org.gallant.account.domain.dto;
+package org.gallant.account.domain.dto.result;
 
 import java.util.Date;
 import lombok.Data;

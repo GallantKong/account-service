@@ -64,7 +64,7 @@
     <table tableName="fund_order" domainObjectName="FundOrder" delimitIdentifiers="true">
       <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
     </table>
-    <table tableName="fund_order_type" domainObjectName="FundOrderType" delimitIdentifiers="true">
+    <!--<table tableName="fund_order_type" domainObjectName="FundOrderType" delimitIdentifiers="true">
       <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
     </table>
     <table tableName="account_info" domainObjectName="AccountInfo" delimitIdentifiers="true">
@@ -72,6 +72,6 @@
     </table>
     <table tableName="product_info" domainObjectName="ProductInfo" delimitIdentifiers="true">
       <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
-    </table>
+    </table>-->
   </context>
 </generatorConfiguration>

@@ -9,7 +9,7 @@ import java.util.Date;
 public class FundOrder implements Serializable {
     private Integer id;
 
-    private Integer fundOrderDate;
+    private Date fundOrderDate;
 
     private Integer accountInfoId;
 
@@ -35,11 +35,11 @@ public class FundOrder implements Serializable {
         this.id = id;
     }
 
-    public Integer getFundOrderDate() {
+    public Date getFundOrderDate() {
         return fundOrderDate;
     }
 
-    public void setFundOrderDate(Integer fundOrderDate) {
+    public void setFundOrderDate(Date fundOrderDate) {
         this.fundOrderDate = fundOrderDate;
     }
 
@@ -108,7 +108,7 @@ public class FundOrder implements Serializable {
      */
     public enum Column {
         id("id", "id", "INTEGER"),
-        fundOrderDate("fund_order_date", "fundOrderDate", "INTEGER"),
+        fundOrderDate("fund_order_date", "fundOrderDate", "TIMESTAMP"),
         accountInfoId("account_info_id", "accountInfoId", "INTEGER"),
         productInfoId("product_info_id", "productInfoId", "INTEGER"),
         fundOrderTypeId("fund_order_type_id", "fundOrderTypeId", "INTEGER"),

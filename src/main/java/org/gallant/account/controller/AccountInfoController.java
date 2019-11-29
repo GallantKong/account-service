@@ -3,10 +3,10 @@ package org.gallant.account.controller;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.gallant.account.controller.hateoas.AccountInfoResourceAssembler;
-import org.gallant.account.domain.dto.AccountInfoDTO;
-import org.gallant.account.domain.dto.AccountInfoQueryDTO;
-import org.gallant.account.domain.dto.AccountInfoSaveDTO;
-import org.gallant.account.domain.dto.AccountInfoUpdateDTO;
+import org.gallant.account.domain.dto.param.AccountInfoBaseDTO;
+import org.gallant.account.domain.dto.result.AccountInfoDTO;
+import org.gallant.account.domain.dto.param.AccountInfoQueryDTO;
+import org.gallant.account.domain.dto.param.AccountInfoUpdateDTO;
 import org.gallant.account.domain.dto.SaveGroup;
 import org.gallant.account.exception.AccountServiceException;
 import org.gallant.account.manager.AccountInfoManager;
@@ -61,10 +61,10 @@ public class AccountInfoController extends BaseController {
 
     @PostMapping
     public ResponseEntity<EntityModel<AccountInfoDTO>> save(
-            @Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO,
+            @Validated(SaveGroup.class) @RequestBody AccountInfoBaseDTO accountInfoBaseDTO,
             BindingResult errors) {
         processBindingResult(errors);
-        AccountInfoDTO accountInfoDTO = accountInfoManager.save(accountInfoSaveDTO);
+        AccountInfoDTO accountInfoDTO = accountInfoManager.save(accountInfoBaseDTO);
         return ResponseEntity.created(WebMvcLinkBuilder
                 .linkTo(WebMvcLinkBuilder.methodOn(AccountInfoController.class)
                         .query(accountInfoDTO.getId())).toUri())
@@ -73,14 +73,14 @@ public class AccountInfoController extends BaseController {
 
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<EntityModel<AccountInfoDTO>> update(@PathVariable Integer id,
-            @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
+            @RequestBody AccountInfoBaseDTO accountInfoBaseDTO, BindingResult errors) {
         processBindingResult(errors);
         AccountInfoDTO accountInfoDTOOld = accountInfoManager.queryByPrimaryKey(id);
         if (accountInfoDTOOld == null) {
-            throw new AccountServiceException("对象不存在,更新失败,id=" + id + ",accountInfoSaveDTO=" + accountInfoSaveDTO);
+            throw new AccountServiceException("对象不存在,更新失败,id=" + id + ",accountInfoBaseDTO=" + accountInfoBaseDTO);
         }
         AccountInfoUpdateDTO accountInfoUpdateDTO = new AccountInfoUpdateDTO();
-        BeanUtils.copyProperties(accountInfoSaveDTO, accountInfoUpdateDTO);
+        BeanUtils.copyProperties(accountInfoBaseDTO, accountInfoUpdateDTO);
         accountInfoUpdateDTO.setId(id);
         AccountInfoDTO accountInfoDTO = accountInfoManager.update(accountInfoUpdateDTO);
         return ResponseEntity.created(WebMvcLinkBuilder

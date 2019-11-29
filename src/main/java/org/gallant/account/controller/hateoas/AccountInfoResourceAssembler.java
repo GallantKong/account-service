@@ -1,7 +1,7 @@
 package org.gallant.account.controller.hateoas;
 
 import org.gallant.account.controller.AccountInfoController;
-import org.gallant.account.domain.dto.AccountInfoDTO;
+import org.gallant.account.domain.dto.result.AccountInfoDTO;
 import org.springframework.hateoas.server.core.AnnotationLinkRelationProvider;
 import org.springframework.stereotype.Component;
 

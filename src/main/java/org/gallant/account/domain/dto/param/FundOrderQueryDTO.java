@@ -1,4 +1,4 @@
-package org.gallant.account.domain.dto;
+package org.gallant.account.domain.dto.param;
 
 import java.util.Date;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountInfoQueryDTO extends Pageable {
+public class FundOrderQueryDTO extends Pageable {
 
-    private static final long serialVersionUID = -5370319974234981535L;
+    private static final long serialVersionUID = -1264708420241563947L;
     private Date startDate;
     private Date endDate;
 

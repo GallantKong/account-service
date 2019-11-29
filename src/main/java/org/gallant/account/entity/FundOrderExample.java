@@ -309,52 +309,52 @@ public class FundOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateEqualTo(Integer value) {
+        public Criteria andFundOrderDateEqualTo(Date value) {
             addCriterion("fund_order_date =", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateNotEqualTo(Integer value) {
+        public Criteria andFundOrderDateNotEqualTo(Date value) {
             addCriterion("fund_order_date <>", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateGreaterThan(Integer value) {
+        public Criteria andFundOrderDateGreaterThan(Date value) {
             addCriterion("fund_order_date >", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateGreaterThanOrEqualTo(Integer value) {
+        public Criteria andFundOrderDateGreaterThanOrEqualTo(Date value) {
             addCriterion("fund_order_date >=", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateLessThan(Integer value) {
+        public Criteria andFundOrderDateLessThan(Date value) {
             addCriterion("fund_order_date <", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateLessThanOrEqualTo(Integer value) {
+        public Criteria andFundOrderDateLessThanOrEqualTo(Date value) {
             addCriterion("fund_order_date <=", value, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateIn(List<Integer> values) {
+        public Criteria andFundOrderDateIn(List<Date> values) {
             addCriterion("fund_order_date in", values, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateNotIn(List<Integer> values) {
+        public Criteria andFundOrderDateNotIn(List<Date> values) {
             addCriterion("fund_order_date not in", values, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateBetween(Integer value1, Integer value2) {
+        public Criteria andFundOrderDateBetween(Date value1, Date value2) {
             addCriterion("fund_order_date between", value1, value2, "fundOrderDate");
             return (Criteria) this;
         }
 
-        public Criteria andFundOrderDateNotBetween(Integer value1, Integer value2) {
+        public Criteria andFundOrderDateNotBetween(Date value1, Date value2) {
             addCriterion("fund_order_date not between", value1, value2, "fundOrderDate");
             return (Criteria) this;
         }

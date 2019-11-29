@@ -1,4 +1,4 @@
-package org.gallant.account.domain.dto;
+package org.gallant.account.domain.dto.param;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountInfoUpdateDTO extends AccountInfoSaveDTO {
+public class AccountInfoUpdateDTO extends AccountInfoBaseDTO {
 
     private static final long serialVersionUID = 5332623238945579244L;
     private Integer id;

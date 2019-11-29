@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
-import org.gallant.account.domain.dto.AccountInfoDTO;
-import org.gallant.account.domain.dto.AccountInfoQueryDTO;
-import org.gallant.account.domain.dto.AccountInfoSaveDTO;
-import org.gallant.account.domain.dto.AccountInfoUpdateDTO;
+import org.gallant.account.domain.dto.param.AccountInfoBaseDTO;
+import org.gallant.account.domain.dto.result.AccountInfoDTO;
+import org.gallant.account.domain.dto.param.AccountInfoQueryDTO;
+import org.gallant.account.domain.dto.param.AccountInfoUpdateDTO;
 import org.gallant.account.entity.AccountInfo;
 import org.gallant.account.entity.AccountInfo.Column;
 import org.gallant.account.entity.AccountInfoExample;
@@ -51,9 +51,9 @@ public class AccountInfoManager {
         return null;
     }
 
-    public AccountInfoDTO save(AccountInfoSaveDTO accountInfoSaveDTO) {
+    public AccountInfoDTO save(AccountInfoBaseDTO accountInfoBaseDTO) {
         AccountInfoDTO accountInfoDTO = null;
-        AccountInfo accountInfo = convert(accountInfoSaveDTO);
+        AccountInfo accountInfo = convert(accountInfoBaseDTO);
         accountInfo.setIsActive(true);
         Date date = new Date();
         accountInfo.setCreateTime(date);
@@ -90,9 +90,9 @@ public class AccountInfoManager {
         return accountInfoDTO;
     }
 
-    private AccountInfo convert(AccountInfoSaveDTO accountInfoSaveDTO) {
+    private AccountInfo convert(AccountInfoBaseDTO accountInfoBaseDTO) {
         AccountInfo accountInfo = new AccountInfo();
-        BeanUtils.copyProperties(accountInfoSaveDTO, accountInfo);
+        BeanUtils.copyProperties(accountInfoBaseDTO, accountInfo);
         return accountInfo;
     }
 
