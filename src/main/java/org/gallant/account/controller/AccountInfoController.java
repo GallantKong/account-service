@@ -42,48 +42,56 @@ public class AccountInfoController extends BaseController {
     private AccountInfoResourceAssembler accountInfoResourceAssembler;
 
     @GetMapping
-    public CollectionModel<EntityModel<AccountInfoDTO>> query(@ModelAttribute AccountInfoQueryDTO accountInfoQueryDTO) {
+    public CollectionModel<EntityModel<AccountInfoDTO>> query(
+            @ModelAttribute AccountInfoQueryDTO accountInfoQueryDTO) {
         log.debug("accountInfoQueryDTO:{}", accountInfoQueryDTO);
-        return accountInfoResourceAssembler.toCollectionModel(accountInfoManager.queryByPage(accountInfoQueryDTO));
+        return accountInfoResourceAssembler
+                .toCollectionModel(accountInfoManager.queryByPage(accountInfoQueryDTO));
     }
 
-    @GetMapping(value="/{id:\\d+}")
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<EntityModel<AccountInfoDTO>> query(@PathVariable Integer id) {
         log.debug("id:{}", id);
         AccountInfoDTO accountInfoDTO = accountInfoManager.queryByPrimaryKey(id);
         if (accountInfoDTO == null) {
-            throw new AccountServiceException("对象不存在,id="+id);
+            throw new AccountServiceException("对象不存在,id=" + id);
         }
         return ResponseEntity.ok(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
     @PostMapping
-    public ResponseEntity<EntityModel<AccountInfoDTO>> save(@Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
+    public ResponseEntity<EntityModel<AccountInfoDTO>> save(
+            @Validated(SaveGroup.class) @RequestBody AccountInfoSaveDTO accountInfoSaveDTO,
+            BindingResult errors) {
         processBindingResult(errors);
         AccountInfoDTO accountInfoDTO = accountInfoManager.save(accountInfoSaveDTO);
-        return createResponseEntity(accountInfoDTO);
+        return ResponseEntity.created(WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(AccountInfoController.class)
+                        .query(accountInfoDTO.getId())).toUri())
+                .body(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<EntityModel<AccountInfoDTO>> update(@PathVariable Integer id, @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
+    public ResponseEntity<EntityModel<AccountInfoDTO>> update(@PathVariable Integer id,
+            @RequestBody AccountInfoSaveDTO accountInfoSaveDTO, BindingResult errors) {
         processBindingResult(errors);
-        // 校验是否存在
-        query(id);
+        AccountInfoDTO accountInfoDTOOld = accountInfoManager.queryByPrimaryKey(id);
+        if (accountInfoDTOOld == null) {
+            throw new AccountServiceException("对象不存在,更新失败,id=" + id + ",accountInfoSaveDTO=" + accountInfoSaveDTO);
+        }
         AccountInfoUpdateDTO accountInfoUpdateDTO = new AccountInfoUpdateDTO();
         BeanUtils.copyProperties(accountInfoSaveDTO, accountInfoUpdateDTO);
         accountInfoUpdateDTO.setId(id);
         AccountInfoDTO accountInfoDTO = accountInfoManager.update(accountInfoUpdateDTO);
-        return createResponseEntity(accountInfoDTO);
+        return ResponseEntity.created(WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(AccountInfoController.class)
+                        .query(accountInfoDTO.getId())).toUri())
+                .body(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
     @DeleteMapping("/{id:\\d+}")
     public int delete(@PathVariable Integer id) {
         return accountInfoManager.delete(id);
-    }
-
-    private ResponseEntity<EntityModel<AccountInfoDTO>> createResponseEntity(AccountInfoDTO accountInfoDTO){
-        return ResponseEntity.created(
-                WebMvcLinkBuilder.linkTo(query(accountInfoDTO.getId())).toUri()).body(accountInfoResourceAssembler.toModel(accountInfoDTO));
     }
 
 }
