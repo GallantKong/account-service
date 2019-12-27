@@ -75,8 +75,8 @@ public class FundOrderController extends BaseController {
     public ResponseEntity<EntityModel<FundOrderDTO>> update(@PathVariable Integer id,
             @RequestBody FundOrderBaseDTO fundOrderBaseDTO, BindingResult errors) {
         processBindingResult(errors);
-        FundOrderDTO fundOrderDTOOld = fundOrderManager.queryByPrimaryKey(id);
-        if (fundOrderDTOOld == null) {
+        FundOrderDTO fundOrderOld = fundOrderManager.queryByPrimaryKey(id);
+        if (fundOrderOld == null) {
             throw new AccountServiceException("对象不存在,更新失败,id=" + id + ",fundOrderBaseDTO=" + fundOrderBaseDTO);
         }
         FundOrderUpdateDTO fundOrderUpdateDTO = new FundOrderUpdateDTO();
