@@ -7,6 +7,9 @@
   </Properties>
 
   <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${layout}" />
+    </Console>
     <RollingRandomAccessFile name="appAppender"
       immediateFlush="true" fileName="${logging.file.name}"
       filePattern="${logging.file.filePattern}">
@@ -17,8 +20,12 @@
   </Appenders>
 
   <Loggers>
-    <Logger name="org.gallant.account" level="debug">
+    <Logger name="org.gallant.account" level="DEBUG">
       <appender-ref ref="appAppender"/>
     </Logger>
+    <Root level="INFO">
+      <AppenderRef ref="Console"/>
+      <appender-ref ref="appAppender"/>
+    </Root>
   </Loggers>
 </Configuration>

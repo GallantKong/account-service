@@ -3,7 +3,7 @@
 <mapper namespace="org.gallant.account.mapper.FundOrderMapper">
   <resultMap id="BaseResultMap" type="org.gallant.account.entity.FundOrder">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="fund_order_date" jdbcType="INTEGER" property="fundOrderDate" />
+    <result column="fund_order_date" jdbcType="TIMESTAMP" property="fundOrderDate" />
     <result column="account_info_id" jdbcType="INTEGER" property="accountInfoId" />
     <result column="product_info_id" jdbcType="INTEGER" property="productInfoId" />
     <result column="fund_order_type_id" jdbcType="INTEGER" property="fundOrderTypeId" />
@@ -169,7 +169,7 @@
     insert into `fund_order` (fund_order_date, account_info_id, product_info_id, 
       fund_order_type_id, fund_order_amount, is_active, 
       create_time, modify_time)
-    values (#{fundOrderDate,jdbcType=INTEGER}, #{accountInfoId,jdbcType=INTEGER}, #{productInfoId,jdbcType=INTEGER}, 
+    values (#{fundOrderDate,jdbcType=TIMESTAMP}, #{accountInfoId,jdbcType=INTEGER}, #{productInfoId,jdbcType=INTEGER}, 
       #{fundOrderTypeId,jdbcType=INTEGER}, #{fundOrderAmount,jdbcType=DECIMAL}, #{isActive,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
@@ -206,7 +206,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="fundOrderDate != null">
-        #{fundOrderDate,jdbcType=INTEGER},
+        #{fundOrderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="accountInfoId != null">
         #{accountInfoId,jdbcType=INTEGER},
@@ -244,7 +244,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.fundOrderDate != null">
-        fund_order_date = #{record.fundOrderDate,jdbcType=INTEGER},
+        fund_order_date = #{record.fundOrderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.accountInfoId != null">
         account_info_id = #{record.accountInfoId,jdbcType=INTEGER},
@@ -275,7 +275,7 @@
   <update id="updateByExample" parameterType="map">
     update `fund_order`
     set id = #{record.id,jdbcType=INTEGER},
-      fund_order_date = #{record.fundOrderDate,jdbcType=INTEGER},
+      fund_order_date = #{record.fundOrderDate,jdbcType=TIMESTAMP},
       account_info_id = #{record.accountInfoId,jdbcType=INTEGER},
       product_info_id = #{record.productInfoId,jdbcType=INTEGER},
       fund_order_type_id = #{record.fundOrderTypeId,jdbcType=INTEGER},
@@ -291,7 +291,7 @@
     update `fund_order`
     <set>
       <if test="fundOrderDate != null">
-        fund_order_date = #{fundOrderDate,jdbcType=INTEGER},
+        fund_order_date = #{fundOrderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="accountInfoId != null">
         account_info_id = #{accountInfoId,jdbcType=INTEGER},
@@ -319,7 +319,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="org.gallant.account.entity.FundOrder">
     update `fund_order`
-    set fund_order_date = #{fundOrderDate,jdbcType=INTEGER},
+    set fund_order_date = #{fundOrderDate,jdbcType=TIMESTAMP},
       account_info_id = #{accountInfoId,jdbcType=INTEGER},
       product_info_id = #{productInfoId,jdbcType=INTEGER},
       fund_order_type_id = #{fundOrderTypeId,jdbcType=INTEGER},
@@ -340,7 +340,7 @@
       is_active, create_time, modify_time)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.fundOrderDate,jdbcType=INTEGER}, #{item.accountInfoId,jdbcType=INTEGER}, 
+      (#{item.fundOrderDate,jdbcType=TIMESTAMP}, #{item.accountInfoId,jdbcType=INTEGER}, 
         #{item.productInfoId,jdbcType=INTEGER}, #{item.fundOrderTypeId,jdbcType=INTEGER}, 
         #{item.fundOrderAmount,jdbcType=DECIMAL}, #{item.isActive,jdbcType=BIT}, #{item.createTime,jdbcType=TIMESTAMP}, 
         #{item.modifyTime,jdbcType=TIMESTAMP})
@@ -362,7 +362,7 @@
       (
       <foreach collection="selective" item="column" separator=",">
         <if test="'fund_order_date' == column.value">
-          #{item.fundOrderDate,jdbcType=INTEGER}
+          #{item.fundOrderDate,jdbcType=TIMESTAMP}
         </if>
         <if test="'account_info_id' == column.value">
           #{item.accountInfoId,jdbcType=INTEGER}
