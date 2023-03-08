@@ -1,5 +1,7 @@
 package org.gallant.account.config;
 
+import org.eclipse.jetty.util.BlockingArrayQueue;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
@@ -35,7 +37,11 @@ public class AppContext {
     @Bean
     public ServletWebServerFactory servletContainer() {
         JettyServletWebServerFactory jetty = new JettyServletWebServerFactory();
+        QueuedThreadPool tp = new QueuedThreadPool(4,4, 60000, new BlockingArrayQueue<>(1));
+        jetty.setThreadPool(tp);
         jetty.setPort(Integer.parseInt(serverPort.trim()));
+        MyJettyServerCustomizer myJettyServerCustomizer = new MyJettyServerCustomizer();
+        jetty.addServerCustomizers(myJettyServerCustomizer);
         return jetty;
     }
 }

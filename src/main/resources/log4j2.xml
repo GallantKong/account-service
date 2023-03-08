@@ -9,6 +9,7 @@
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="${layout}" />
+      <ThresholdFilter level="INFO" />
     </Console>
     <RollingRandomAccessFile name="appAppender"
       immediateFlush="true" fileName="${logging.file.name}"
